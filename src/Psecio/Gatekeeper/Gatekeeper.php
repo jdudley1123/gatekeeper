@@ -438,6 +438,30 @@ class Gatekeeper
         }
         return $user;
     }
+    
+     /**
+     * Update a user's details
+     *
+     * @param array $userData User data
+     * @return boolean Success/fail of user update
+     */
+    public static function updateUser($user,$userData)
+    {
+		$updatable_fields=['firstName','lastName','email','password'];
+		
+        //Don't change password if left blank
+		if(isset($userData['password']) && $userData['password'] == ''){unset($userData['password']);}
+		
+		foreach($updatable_fields as $field){
+			isset($userData[$field])	? $user->{$field} = $userData[$field] : '';
+		}
+		
+        if (self::$datasource->save($user)  === false) {
+            echo 'ERROR: '.$user->getLastError()."\n";
+            return false;
+        }
+        return true;
+    }
 
     /**
      * Handle undefined static function calls
