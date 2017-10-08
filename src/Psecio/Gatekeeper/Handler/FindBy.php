@@ -60,7 +60,7 @@ class FindBy extends \Psecio\Gatekeeper\Handler
 
         $modelNs = '\\Psecio\\Gatekeeper\\'.$model.'Model';
         if (!class_exists($modelNs)) {
-            throw new \Psecio\Gatekepper\Exception\ModelNotFoundException('Model type '.$model.' could not be found');
+            throw new \Psecio\Gatekeeper\Exception\ModelNotFoundException('Model type '.$model.' could not be found');
         }
         $instance = new $modelNs($this->getDb());
         $instance = $this->getDb()->find($instance, $data);
